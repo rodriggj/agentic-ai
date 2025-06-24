@@ -5,5 +5,5 @@
 ### Architecture 
 
 <p align="center">
-<img width="450" height="300" alt="Image" src="https://github.com/user-attachments/assets/2c29b620-d488-4c01-975a-8ac75335e6a0" />
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/b6b8ef83-8f72-451f-b18f-8a28f23220d2" />
 </p>
