@@ -79,3 +79,10 @@ When checking inventory:
 - Idle Session Timeout - "Default"
 > This is a setting that effectively becomes the short term memory. You can set this between 1 - 60 mins, where if set the Agent will store prompts and session information in its respective prompt & session store to utilize with any interactions. Once the time is expired the session and prompt data will be purged. 
 
+8. There are other sections to configure, but for now leave them as default and scroll to the top of the section and click `Save and Exit`. You should now see another banner indicating that the configuration was implemented. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/4416666d-a72a-49f6-a656-10dbaf6aef56" />
+</p>
+
+--------------
