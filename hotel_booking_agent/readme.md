@@ -285,7 +285,7 @@ Click on `Save and Exit`. Click on `Prepare`.
 
 #### Lambda Function 
 
-3. Now navigate to the AWS Lambda service on the AWS Console. Click `Create Lambda`. Name the lambda `hotelAvailabilityFunction`. Change the Runtime to Python 3.13, and click `Create Function`. 
+1. Now navigate to the AWS Lambda service on the AWS Console. Click `Create Lambda`. Name the lambda `hotelAvailabilityFunction`. Change the Runtime to Python 3.13, and click `Create Function`. 
 
 <p align="center">
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/57e45a83-2113-453e-af77-43d8860051f5" />
@@ -299,9 +299,9 @@ Click on `Save and Exit`. Click on `Prepare`.
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/053cb322-c57b-4e2a-a408-08af3c9b7ec3" />
 </p>
 
-4. Now that the function has been created, lets modify some of the configuration. 
+2. Now that the function has been created, lets modify some of the configuration. 
 
-4a. The lambda function will need time to execute queries and return a result, so we need to increase the `Timeout` configuation. The default is 3 seconds, lets increase it to 1 min 3 seconds. Click `Save`.
+2a. The lambda function will need time to execute queries and return a result, so we need to increase the `Timeout` configuation. The default is 3 seconds, lets increase it to 1 min 3 seconds. Click `Save`.
 
 <p align="center">
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/439480ed-713e-4a5d-8233-999bb01dd604" />
@@ -311,7 +311,7 @@ Click on `Save and Exit`. Click on `Prepare`.
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/9cd21cab-0f4d-4bc3-9f6d-a8bec8053680" />
 </p>
 
-4b. Now we need to modify the `Permissions`. 
+2b. Now we need to modify the `Permissions`. 
 
 If you click on the `Role` provided, you will see we only have "basic" permissions. We need to modify these permissions to increase permissions. Just add "Admin" access to the policy permissions. Click `Add Permissions`.
 
@@ -331,15 +331,15 @@ If you click on the `Role` provided, you will see we only have "basic" permissio
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/bd4557f2-f103-40cf-a438-4b31f41e729d" />
 </p>
 
-5. Now we need to code the lambda to execute a query to the DDB records and execute some processing. 
+3. Now we need to code the lambda to execute a query to the DDB records and execute some processing. 
 
-5a. Click the `Code` tab of the lambda. 
+3a. Click the `Code` tab of the lambda. 
 
 <p align="center">
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/1fda9333-22c2-451a-9e16-1fa4734b4223" />
 </p>
 
-5b. We will now need to execute the following steps within our function: 
+3b. We will now need to execute the following steps within our function: 
 ```sh
 1. Import modules needed - `boto3`
 2. Create a client connection to DDB - [documentation here](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html)
@@ -389,3 +389,195 @@ Input the following variable assignment in the function
 user_input_date = event['checkInDate']
 ```
 
+Item #4: GET item
+```python
+response = client.get_item(TableName='hotelRoomAvailabilityTable', Key={'date': {'S': user_input_date}})
+print(response)
+```
+
+You can `Deploy` and `Test` again, to make sure that the `response` is yielding a query to the DDB table correctly. 
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/fa9dc995-5c5d-469f-9dd7-3442924ca99e" />
+</p>
+
+You can see from the response payload how the response is formatted. Now we can be specific about that response components within the payload we want to retrieve which is just the `Item`. Add the following to the lambda function 
+```python
+room_inventory_data = response['Item']
+```
+
+See the updated view in the Lambda console
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/11212781-cad7-4fa0-a60d-e2506697ad1c" />
+</p>
+
+Item #5. We need to allow the response to be formatted so the Bedrock Service can access the response. We need format to the requirement of a `Bedrock Agent Action Group`
+Nav to this link and scroll down to see the OpenAPI specification to create a Bedrokc Agent Action Group [here](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html). 
+
+Copy/Paste the following into your lambda: 
+```python
+agent = event['agent']
+    actionGroup = event['actionGroup']
+    api_path = event['apiPath']
+    # get parameters
+    get_parameters = event.get('parameters', [])
+    # post parameters
+    post_parameters = event['requestBody']['content']['application/json']['properties']   # Delete this line
+
+    response_body = {
+        'application/json': {
+            'body': "sample response"
+        }
+    }
+    
+    action_response = {
+        'actionGroup': event['actionGroup'],
+        'apiPath': event['apiPath'],
+        'httpMethod': event['httpMethod'],
+        'httpStatusCode': 200,
+        'responseBody': response_body
+    }
+    
+    session_attributes = event['sessionAttributes']
+    prompt_session_attributes = event['promptSessionAttributes']
+    
+    api_response = {
+        'messageVersion': '1.0', 
+        'response': action_response,
+        'sessionAttributes': session_attributes,
+        'promptSessionAttributes': prompt_session_attributes
+    }
+        
+    return api_response
+```
+
+#Edits: 
+- [ ] We are not POSTing any data in this use case, so delete the `post_parameters` line.
+- [ ] In the response body, replace `sample_response` with `room_inventory_data`
+- [ ] Add a print statement to validate the response body
+- [ ] Add a print statement for final `api_response`
+
+The completed lambda body will be the following: 
+
+```python
+import json
+# 1. Import modules needed - `boto3`
+import boto3
+
+# 2. Create a client connection to DDB
+client = boto3.client('dynamodb')
+
+def lambda_handler(event, context):
+# 3. Store the user input 
+    print(f"The user input is {event}")
+    user_input_date = event['checkInDate']
+
+# 4. Reference the DDB Table and retrieve data
+    response = client.get_item(TableName='hotelRoomAvailabilityTable', Key={'date': {'S': user_input_date}})
+    # print(response)
+    room_inventory_data = response['Item']
+    print(room_inventory_data)
+
+#5. Format the response as per the requirement of Bedrock Agent Action Group
+    agent = event['agent']
+    actionGroup = event['actionGroup']
+    api_path = event['apiPath']
+    # get parameters
+    get_parameters = event.get('parameters', [])
+
+    response_body = {
+        'application/json': {
+            'body': room_inventory_data
+        }
+    }
+
+    print(f"The response that will be provided to the agent is {response_body})
+    
+    action_response = {
+        'actionGroup': event['actionGroup'],
+        'apiPath': event['apiPath'],
+        'httpMethod': event['httpMethod'],
+        'httpStatusCode': 200,
+        'responseBody': response_body
+    }
+    
+    session_attributes = event['sessionAttributes']
+    prompt_session_attributes = event['promptSessionAttributes']
+    
+    api_response = {
+        'messageVersion': '1.0', 
+        'response': action_response,
+        'sessionAttributes': session_attributes,
+        'promptSessionAttributes': prompt_session_attributes
+    }
+    print(f"The final api response is {api_response}")
+    return api_response
+```
+
+#### OpenAPI Schema
+1. Navigate to the Amazon Bedrock service. Select your Agent, and click `Edit in Agent Builder`
+
+2. Scroll down to the `Action Group` section, and click `Add`. Provide a `Name` and a `Description`
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/156d1778-607a-4e05-807a-ba8abcafdfc5" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/1c6415c3-77db-4fba-837a-f2521610fc7e" />
+</p>
+
+3. There are 2 `Action Group Types`. In this case because we have a lambda that does the processing, and we will utilzie the API schema for Agent to interact with that Lambda, select the `Define API Schema` option. From the dropdown select the Lambda function we've built - `hotelAvailabilityFunction`
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/1eb422e9-17cc-459c-a864-4978f25a4482" />
+</p>
+
+4. Now we need to define the `Action Group Schema`. We can do it again in 2 ways. We can 1. select an existing Schema or 2. Define via in-line schema editor. B/c we have created a custom lambda, it makes sense to process the option 2. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/14830baf-384b-433b-bc97-9ef46d319d0f" />
+</p>
+
+4a. To edit the schema, Copy/Paste the example and input into a text editor. Then modify according to the API specification that you want to see implemented. See file called `HotelRoomAvailabilityAPI.yaml`. 
+
+4b. Copy/paste the OpenAPI spec into the Bedrock editor for the API scheam definition.  Click `Create`. Then click `Save and Exit`. Then click on `Prepare`.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/2635baa1-9b35-44fd-9f35-c7aabb531534" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/66bc2609-d0c5-4d9f-baab-3ffcf6021bef" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/4cc4bd72-5e93-4381-b79c-b9cd81984d80" />
+</p>
+
+5. Now we need to return to the Lambda function and give the `Agent` permissions to utilize the Lambda. 
+
+5a. Nav to the Lambda service. Select our lamdba, and click `Configuration`. Now click `Add Permissions`. Click on `AWS Service`
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/146cdc05-dce5-4be2-b78c-53ead04fae60" />
+</p>
+
+You can see there is no service that says `Agent` listed here. We need to add it. Click `Other`. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/d698b51d-603b-47c6-adb8-f65767134ef8" />
+</p>
+
+Here we need to provide the following: 
+- [ ] Statement ID: You can put whatever you want. 'hotel-booking-inventory'
+- [ ] Principal: This will be the Bedrock Agent. 'bedrock.amazonaws.com'
+- [ ] Source ARN: (You can get this from the Bedrock \ Agent screen) 'arn:aws:bedrock:us-west-2:551061066810:agent/I9HPADAM84'
+- [ ] Action: Here you will have a drop down, select the 'lambdaInvoke' permission. 
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/9a5d47ae-f3d4-4c4e-acf2-17e3084814a5" />
+</p>
+
+6. Now we can test the Bedrock agent, and see what it has to say about specific dates. 
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/f2bfb3e6-b71e-469d-ab15-16e2d0c5cdc0" />
+</p>
+------ 
