@@ -194,12 +194,12 @@ Upon clicking `Create Knowledge Base` you will be provided with a banner indicat
 
 8b. Click on `Select Model` 
 <p align="center">
-<img width="1728" alt="Image" src="https://github.com/user-attachments/assets/60a4114d-0284-40c0-97f7-13155cd0212a" />
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/60a4114d-0284-40c0-97f7-13155cd0212a" />
 </p>
 
 Select the `Anthropic Claude Sonnet 3` model, and click `Apply`
 <p align="center">
-<img width="1728" alt="Image" src="https://github.com/user-attachments/assets/55306a9d-5987-40ab-9e8f-032cbfc909ea" />
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/55306a9d-5987-40ab-9e8f-032cbfc909ea" />
 </p>
 
 8c. Now we can post a prompt to the Agent and gain some information regarding the Sea View rooms, and receive input from the Vector database that was created to provide input relevant to the Taj rooms. 
