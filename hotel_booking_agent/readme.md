@@ -1,6 +1,6 @@
 # Hotel Booking Agent 
 
-## Referencen Materials
+## Reference Materials
 - [ ] See Taj Fort Aguada Resort [here](https://www.tajhotels.com/en-in/hotels/taj-fort-aguada-goa)
 
 
@@ -182,4 +182,73 @@ Upon clicking `Create Knowledge Base` you will be provided with a banner indicat
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/121ea7ee-d106-49b7-bdea-dbc965bbd001" />
 </p>
 
-> NOTE: There may be issues when attempting to sync. It could be 1. The Role was not created correctly, 2. You don't have access to the Titan Model we used for the Embeddings, or 3. You could be in the wrong Region, or 4. The Trust Relationship to assume the role isn't configured correctly. See the `Sync-Troubleshooting.txt` file for resolution to any of these issues. 
+> NOTE: There may be issues when attempting to sync. It could be 1. The Role was not created correctly, 2. You don't have access to the Titan Model we used for the Embeddings, or 3. You could be in the wrong Region, or 4. The Trust Relationship to assume the role isn't configured correctly. See the `Sync-Troubleshooting.txt` file for resolution to any of these issues. [Troubleshooting](https://grok.com/share/bGVnYWN5_40ee4530-2683-48bc-b6f7-d8d97f5c4af7)
+
+8. Now lets test our Knowledge base. 
+
+8a. Click on `RoomInformation` Knowledge Base. And then select `Test Your Knowledge Base`. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/ac82ac80-9ba1-4368-9534-21a015aaabeb" />
+</p>
+
+8b. Click on `Select Model` 
+<p align="center">
+<img width="1728" alt="Image" src="https://github.com/user-attachments/assets/60a4114d-0284-40c0-97f7-13155cd0212a" />
+</p>
+
+Select the `Anthropic Claude Sonnet 3` model, and click `Apply`
+<p align="center">
+<img width="1728" alt="Image" src="https://github.com/user-attachments/assets/55306a9d-5987-40ab-9e8f-032cbfc909ea" />
+</p>
+
+8c. Now we can post a prompt to the Agent and gain some information regarding the Sea View rooms, and receive input from the Vector database that was created to provide input relevant to the Taj rooms. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/c9428882-164b-4dfe-b2a0-a8bcb2401bbf" />
+</p>
+
+8d. You can also get some input into the `Chunks` of data that were used to prepare the response. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/d2749eab-a2f6-4b6b-ad97-37a14e089503" />
+</p>
+
+9. Now we have to tie the Knowledge Baase to the Agent. 
+
+9a. Copy the Knowledge Base ID
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/c581b391-aade-4494-8cce-46e340e8617b" />
+</p>
+
+9b. Navigate back to the AWS Bedrock service, and nav to `Agents` on the left-nav bar. Select the `Hotel_Room_Booking_Agent`. Click `Edit in Agent Builder`
+<p alig="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/c581b391-aade-4494-8cce-46e340e8617b" />
+</p>
+
+9c. Scroll down to the section called `Knowledge Bases` and click `Add`. Select your Knowledge Base from the drop down. You can also add instructions to the Agent to once again provide it additional context on how to utilize the Knowledge Base. Click the `Add` button. When executed correctly you will see a success banner displayed.
+
+Click on `Save and Exit`. Click on `Prepare`. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/25cc653b-7d36-4ca9-af3e-977ac01b409b" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/3db5d490-2dcf-4372-aead-9bc2e1bee4f0" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/79c14ee2-2004-4439-b600-90181ee7576c" />
+</p>
+
+> You can also capture the Knowledge Base Id and input here as well. 
+
+10. Now you can test the agent and see the response. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/1359e76b-1b1c-447b-9e76-0f363c66ec3b" />
+</p>
+
+-------------
