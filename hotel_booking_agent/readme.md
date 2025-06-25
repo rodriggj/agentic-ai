@@ -330,3 +330,62 @@ If you click on the `Role` provided, you will see we only have "basic" permissio
 <p align="center">
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/bd4557f2-f103-40cf-a438-4b31f41e729d" />
 </p>
+
+5. Now we need to code the lambda to execute a query to the DDB records and execute some processing. 
+
+5a. Click the `Code` tab of the lambda. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/1fda9333-22c2-451a-9e16-1fa4734b4223" />
+</p>
+
+5b. We will now need to execute the following steps within our function: 
+```sh
+1. Import modules needed - `boto3`
+2. Create a client connection to DDB - [documentation here](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html)
+3. Store the user input - date of booking
+4. Reference the DDB Table and retrieve data
+5. Format the response as per the requirement of Bedrock Agent Action Group - [documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html)
+6. Use GET parameters as data retrieval
+7. Replace the value of 'body' and print the value of Response Body
+8. Add rest of code as expected by Agent - [documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html)
+```
+
+Item #1: Input the following import statement in the function
+```python
+# 1. Import modules needed 
+import boto3
+```
+
+Item #2: Input the following variable in the function
+```python
+# 2. Create a client connection to DDB
+client = boto3.client('dynamodb')
+```
+
+Item #3: Create a Test Payload
+First need to create a Test payload. Click the Test button and input the following JSON payload. 
+```json
+{
+    "checkInDate": "2025-12-25"
+}
+```
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/c5689072-2acc-467e-aa8d-f69bebc64b7e" />
+</p>
+
+Input the following print statement in the function
+```python
+print(f"The user input is {event}")
+```
+
+Click, `Deploy` and then click `Test`, and you should get a UI output that looks similar to the following, where you can valdiate that the event is being returned in the correct format. 
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/dda9985c-6b04-45a8-b109-4bc4d74b45f4" />
+</p>
+
+Input the following variable assignment in the function 
+```python
+user_input_date = event['checkInDate']
+```
+
