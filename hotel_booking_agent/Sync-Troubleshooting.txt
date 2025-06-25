@@ -1,0 +1,50 @@
+```txt 
+Data sync failed. "Knowledge base role arn:aws:iam::551061066810:role/service-role/AmazonBedrockExecutionRoleForKnowledgeBase_6g8wu is not able to call 
+specified bedrock embedding model arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v2:0: You don't have access to the model with the 
+specified model ID. (Service: BedrockRuntime, Status Code: 403, Request ID: 350d9e57-092f-488d-9595-d2709b5b7d9e) (SDK Attempt Count: 1)"
+```
+
+
+The error indicates that the IAM role `arn:aws:iam::551061066810:role/service-role/AmazonBedrockExecutionRoleForKnowledgeBase_6g8wu` lacks permission to access the Bedrock embedding model `arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v2:0`. Here's how to resolve it:
+
+1. **Check IAM Role Permissions**:
+   - Navigate to the AWS IAM console.
+   - Locate the role `AmazonBedrockExecutionRoleForKnowledgeBase_6g8wu`.
+   - Verify its attached policies. Ensure it has a policy granting access to the Bedrock model, such as:
+     ```json
+     {
+         "Effect": "Allow",
+         "Action": [
+             "bedrock:InvokeModel",
+             "bedrock:InvokeModelWithResponseStream"
+         ],
+         "Resource": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v2:0"
+     }
+     ```
+   - If missing, attach or update the policy with the above permissions.
+
+2. **Verify Model Access in Bedrock Console**:
+   - Go to the Amazon Bedrock console in the `us-west-2` region.
+   - Under "Model access," ensure the account has access to `amazon.titan-embed-text-v2:0`.
+   - If not enabled, request access by selecting the model and submitting a request.
+
+3. **Confirm Region**:
+   - Ensure the knowledge base and role are operating in `us-west-2`, as the model ARN is region-specific.
+
+4. **Trust Relationship**:
+   - Check the role’s trust policy to ensure it allows the Bedrock service to assume the role:
+     ```json
+     {
+         "Effect": "Allow",
+         "Principal": {
+             "Service": "bedrock.amazonaws.com"
+         },
+         "Action": "sts:AssumeRole"
+     }
+     ```
+
+5. **Retry Data Sync**:
+   - After updating permissions, retry the data sync operation for the knowledge base.
+
+If the issue persists, verify the knowledge base configuration in Bedrock to ensure it references the correct model and role ARNs. For further assistance, 
+check AWS CloudTrail logs for additional error details or contact AWS Support.
