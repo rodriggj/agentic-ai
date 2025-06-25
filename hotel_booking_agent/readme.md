@@ -1,5 +1,9 @@
 # Hotel Booking Agent 
 
+## Referencen Materials
+- [ ] See Taj Fort Aguada Resort [here](https://www.tajhotels.com/en-in/hotels/taj-fort-aguada-goa)
+
+
 ## Procedures 
 
 ### Agent Creation
@@ -86,3 +90,96 @@ When checking inventory:
 </p>
 
 --------------
+
+### Bedrock Knowledge Base Creation - Tool 1
+
+1. Create an S3 bucket to upload Files. Nav to console, `AWS S3` service and create a bucket and call it `gjr-brdemo-s3roominformation`. When creating the bucket, just provide a name, leave all the other config as defaults. 
+
+> Here we create the S3 Bucket
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/365d6cd1-7e00-4681-979e-373411551cba" />
+</p>
+
+> Here we utilize the Hotel pdf content as a means to populate our knowledge base
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/1ae6acfb-bb97-4a76-a485-e3698fe034f7" />
+</p>
+
+> Here we upload this content to the S3 bucket to populate the Bedrock knowledge base with relevant data
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/4ce4d700-c2a9-4c2c-a8e4-cc3481ed1177" />
+</p>
+
+2. Now nav to the AWS Bedrock service from the console. On the left-nav pane, click on `Builder Tools \ Knowledge Bases`. When you click `Create` you are presented with a few options, click `Create Knowledge Base with Vector Store`.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/9dc42004-fa19-4fe5-a1ce-ae51071346ae" />
+</p>
+
+3. You will have to configure the `Knowledge Base` in several parts as seen below, for the `Provide Knowledge Base Details` section, populate as follows: 
+
+3a. Name and Description
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/fae6d0d5-327c-4409-8833-8015e0f57002" />
+</p>
+
+3b. IAM Role
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/3fb9c2dc-df7d-4a61-88c6-7bff880caca6" />
+</p>
+
+3c. Data Source
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/03624484-981b-4c6c-b98e-62860d3293d1" />
+</p>
+
+Leave `Tags` and `Log Deliveries` as optional, and click `Next`.
+
+4. Now we will have to configure our data source. In this case becasue we are using S3, the configuration screen is S3 specific. Had we choose to utilzie another data source, the associated configuration screen is slightly different. 
+
+For this screeen simply click the `Browse S3` button, and select the Bucket we created hosting our PDF files. 
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/3ed53abf-ffc3-4c4f-bdac-fc958a6528d5" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/59eca4a3-266a-4812-8030-3e97ec7c8025" />
+</p>
+
+Leave the `Chunking` section as default and click `Next`.
+
+5. Next we need to choose the `Embedding` model, which will convert the `Chunking` data into Vector embeddgings. This is a standard part of LLM architectecture. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/d9f7f47e-dbef-48ae-a49d-6479425d7bfa" />
+</p>
+
+5a. For the Embeddings Model select - Titan Embeddings
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/a7b0530e-2998-4f99-be2f-603409bece47" />
+</p>
+
+5b. Now you have to decide where the Vector embeddings will be stored, so we will select `AWS OpenSearch Serverless`. Then click the `Next` button.
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/3b54c7c9-213f-4273-81df-ffd86c7a868c" />
+</p>
+
+6. Finally, you can `Review and Create` the Knowledge Base based on the selections you made previously. Review and click `Create Knowledge Base`
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/07594e47-48bf-4909-ae05-5da71b234afa" />
+</p>
+
+Upon clicking `Create Knowledge Base` you will be provided with a banner indicating that the Vector Database and the associated embeddings are being created and stored with OpenSearch Serverless Service. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/dfb00807-1d4f-462b-907b-d195ebcefe29" />
+</p>
+
+7. Once the 1. Role Has been provisioned, and 2. The Vector Database has been created, you will need to `Sync` your Knowledge base, with the data source. To do this select your Knowledge bases and press `Sync`. A banner will appear upon successful syncing process. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/121ea7ee-d106-49b7-bdea-dbc965bbd001" />
+</p>
+
+> NOTE: There may be issues when attempting to sync. It could be 1. The Role was not created correctly, 2. You don't have access to the Titan Model we used for the Embeddings, or 3. You could be in the wrong Region, or 4. The Trust Relationship to assume the role isn't configured correctly. See the `Sync-Troubleshooting.txt` file for resolution to any of these issues. 
