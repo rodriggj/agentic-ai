@@ -252,3 +252,81 @@ Click on `Save and Exit`. Click on `Prepare`.
 </p>
 
 -------------
+
+### AWS Lambda and OpenAPI Specification w/ DynamoDB - Tool 2
+
+#### DynamoDB Table
+
+1. Create the DynamoDB Table. Nav to the AWS console and search for the AWS DynamoDB service. Click `Create Table` and provide a `Table Name` of `hotelRoomAvailabilityTable`. Input the `date` as the Partion Key, leave the rest of the configuration as default, and click `Create Table`.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/c05d2d23-03ee-410e-b3d5-62136f4d71d4" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/adf8ebd8-bc0c-4425-acea-de04c8f92685" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/aab1a51e-a84f-4f1d-9baf-c22bb0f00b25" />
+</p>
+
+2. Click on the newly created Table, and then click `Explore Table Items`. Create a series of records as "seed data".
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/dd9fee09-5c74-41f4-9874-83e46d4ee8a2" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/60237c7f-bc18-4849-b0f7-f36509ebd7d2" />
+</p>
+
+----
+
+#### Lambda Function 
+
+3. Now navigate to the AWS Lambda service on the AWS Console. Click `Create Lambda`. Name the lambda `hotelAvailabilityFunction`. Change the Runtime to Python 3.13, and click `Create Function`. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/57e45a83-2113-453e-af77-43d8860051f5" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/62db1094-4c02-4ecf-8de7-3bb2aa29fe1d" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/053cb322-c57b-4e2a-a408-08af3c9b7ec3" />
+</p>
+
+4. Now that the function has been created, lets modify some of the configuration. 
+
+4a. The lambda function will need time to execute queries and return a result, so we need to increase the `Timeout` configuation. The default is 3 seconds, lets increase it to 1 min 3 seconds. Click `Save`.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/439480ed-713e-4a5d-8233-999bb01dd604" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/9cd21cab-0f4d-4bc3-9f6d-a8bec8053680" />
+</p>
+
+4b. Now we need to modify the `Permissions`. 
+
+If you click on the `Role` provided, you will see we only have "basic" permissions. We need to modify these permissions to increase permissions. Just add "Admin" access to the policy permissions. Click `Add Permissions`.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/97f40c18-9bdd-44de-9259-a4938f28171c" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/f2a25312-cc02-4926-be4a-88db4b514de7" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/6a7c6720-0175-4b10-89dd-bb4f377dbeab" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/bd4557f2-f103-40cf-a438-4b31f41e729d" />
+</p>
