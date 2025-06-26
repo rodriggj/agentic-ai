@@ -2,7 +2,8 @@
 
 ## Reference Materials
 - [ ] See Taj Fort Aguada Resort [here](https://www.tajhotels.com/en-in/hotels/taj-fort-aguada-goa)
-
+- [ ] Lamdba Function - Boto3 [docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html)
+- [ ] Bedrock to Lambda Integration [docs](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html)
 
 ## Procedures 
 
