@@ -20,7 +20,8 @@
     + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
     + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
 - [ ] [5. Guardrails](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#deployment)
-- [ ] [6. Deployment]()
+- [ ] [6. Deployment](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#deployment)
+- [ ] [7. UI Integration]()
 
 ------------
 
