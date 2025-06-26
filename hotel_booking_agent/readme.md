@@ -469,7 +469,7 @@ client = boto3.client('dynamodb')
 def lambda_handler(event, context):
 # 3. Store the user input 
     print(f"The user input is {event}")
-    user_input_date = event['checkInDate']
+    user_input_date = event['parameters'][0]['value']
 
 # 4. Reference the DDB Table and retrieve data
     response = client.get_item(TableName='hotelRoomAvailabilityTable', Key={'date': {'S': user_input_date}})
@@ -486,11 +486,11 @@ def lambda_handler(event, context):
 
     response_body = {
         'application/json': {
-            'body': room_inventory_data
+            'body': json.dumps(room_inventory_data)
         }
     }
 
-    print(f"The response that will be provided to the agent is {response_body})
+    print(f"The response that will be provided to the agent is {response_body}")
     
     action_response = {
         'actionGroup': event['actionGroup'],
@@ -580,4 +580,30 @@ Here we need to provide the following:
 <p align="center">
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/f2bfb3e6-b71e-469d-ab15-16e2d0c5cdc0" />
 </p>
+
 ------ 
+
+### AWS Lambda and OpenAPI Specification w/ DynamoDB - Tool 3
+
+#### Create DDB Table
+
+#### Create Lambda Function 
+
+1. Modify the permissions
+2. Execute the following steps in the lambda function: 
+
+```txt
+1. Imports (boto3, uuid)
+2. Initialize DDB connection
+3. Store the user input - get event details.
+4. Retrieve the data from the event - guestName, checkInDate, numberOfNights, & roomType
+5. Get room availabilty from hotelRoomAvailability Table using get_item method
+6. Get room inventory data for SeaView rooms and GardenView rooms and print values
+7. If inventory for Gardenview and Seaview = 0; send error message to the user -- No rooms available for specified date.
+8. Generate unique booking ID to store in DDB table along with booking and send back booking id to user
+9. Create booking record by inserting this data into hotelRoomBookingTable using boto3 put_items method
+10. Print return bookingID
+11. Add details the Bedrock Agent expects 
+12. Use POST parameters and send back bookingID to user, print booking id
+13. Replace value of responseBody and print, return api_response
+```
