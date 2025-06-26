@@ -14,8 +14,7 @@
     + - [ ] [DynamoDB Configuration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#dynamodb-table)
     + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
     + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
-- [ ] [4. Create Tool #3 - Room Booking Capabiliy](https://github.com/rodriggj/agentic-ai/tree/main/
-hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-3)
+- [ ] [4. Create Tool #3 - Room Booking Capabiliy](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-3)
     + - [ ] [DynamoDB Configuration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#dynamodb-table)
     + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
     + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
