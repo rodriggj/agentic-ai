@@ -19,6 +19,7 @@
     + - [ ] [DynamoDB Configuration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#dynamodb-table)
     + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
     + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
+- [ ] [5. Guardrails](http://www.google.com)
 
 ------------
 
@@ -751,3 +752,93 @@ def lambda_handler(event, context):
 <img width="300" alt="Image" src="https://github.com/user-attachments/assets/658e0243-fe6c-48b1-b5ef-64be758f3049" />
 </p>
 
+---------------
+
+### Guardrails
+
+1. Navigate to Bedrock service on AWS console. On left-nav pane, select `Guardrails`. Click `Create Guardrails`. Input the information similar to the screenshot below, and click 'Next'. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/aff7639c-e9ae-4481-90ea-6e475b391308" />
+</p>
+
+2. Configure content filters. On these screens you can filter prompts and responses that apply to Toxicity of responses. For purposes of this demo we will leave as defaults. Click 'Next'
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/36ab8aa1-7753-4a8b-bf4b-adede331f1e5" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/0afe8d22-fb31-472f-8d6e-1d77b6b7a374" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/d95d1eaa-ff49-47e4-a270-e1016a1c2f6e" />
+</p>
+
+3. Now you can add additional guardrails, where you can explictily 'Deny' a topic from being addressed by the Agent. Leave defaults, click 'Next'.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/d95d1eaa-ff49-47e4-a270-e1016a1c2f6e" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/dc4e0d46-1a87-4953-90a2-0251f969153d" />
+</p>
+
+4. You can add additional guardrails specifically on words to avoid in the prompt / Agent interaction. Leave defaults, click 'Next'.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/b1603876-d44b-4ecf-b468-d9104ac19368" />
+</p>
+
+5. You can add a filter related to PII. Leave defaults, click 'Next'.
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/36d6bb03-d1f1-48c1-9519-4f8e067873a5" />
+</p>
+
+6. You can add filters to Agent responses to ensure they are 'grounded' in only reference data that you have provided. Leave defaults, click 'Next'.
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/9e1f24e0-5c37-4b8c-88c2-aaf1a2595737" />
+</p>
+
+7. Finally you are presented with Review screens, click 'Create Guardrail'. After completing this configuration you will have to once again select the model that you want to implement your Guardrail provisions. Clic 'Select Model'. Select 'Nova Pro', and test to see tht the prompt / Agent interactions are working. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/642f4dc1-0bc8-4c47-94a6-a6832824580b" />
+</p>
+
+8. Test the Guardrail and ensure the configuration is preventing the appropriate items. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/30d2cbf1-e4a7-490c-9113-91c970653b39" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/78b0b4bb-823e-4d38-aaa1-a2987dc28d82" />
+</p>
+
+9. Now we need to align the Guardrail to your Agent. To do so copy the name of the Guardrail -- 'HotelBookingGuardrails'. Nav to `Agents` in the left-nav pane. Select your agent and click the button  `Edit in Agent Builder`. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/61a886ec-c665-4a4e-a6bb-901c947de2d4" />
+</p>
+
+Paste the name, or select from the Drop down box the name of the Guardrail created. Click 'Save and Exit', then again Click 'Save and Exit'. And click on 'Prepare' to ensure your agent is now utilizing the guardrail. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/6640d5c4-d079-41d6-ac7b-6ccff53d4f6d" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/b8613bf1-7847-48b4-ad17-ee9e6aaa1ca3" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/2e1176a9-7eea-4da5-9ecc-997dcd9ea6dc" />
+</p>
+
+-----------
+
+### Deployment
