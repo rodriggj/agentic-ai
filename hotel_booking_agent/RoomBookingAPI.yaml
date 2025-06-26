@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Hotel Booking API
+  version: 1.0.0
+  description: APIs for Booking a Hotel Room.
+
+paths:
+  /bookHotelRoom:
+    post:
+      summary: API to book hotel room with checkInDate, roomType, guestName and numberOfNights
+      description: API to book hotel room with checkInDate, roomType, guestName and numberOfNights
+      operationId: bookHotelRoom
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+              type: Object
+              properties: 
+                checkInDate: 
+                  type: string
+                  description: Date of room checkin 
+                guestName: 
+                  type: string
+                  description: Guest name
+                roomType:
+                  type: string
+                  description: Type of room - Garden View or Sea View
+                numberOfNights: 
+                  type: string
+                  description: Planned stay for number of nights
+              required:
+                - guestName
+                - checkInDate
+                - roomType
+                - numberOfNights
+      responses:
+        "200":
+          description: Return Booking ID
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  returnBookingID:
+                    type: string
+                    description: Your booking is confirmed. Booking Confirmation ID
+        "400": 
+          description: Bad request. One or more required fields are missing or invalid.
