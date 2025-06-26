@@ -607,3 +607,130 @@ Here we need to provide the following:
 12. Use POST parameters and send back bookingID to user, print booking id
 13. Replace value of responseBody and print, return api_response
 ```
+
+Repeat the same steps above to ensure that the Lambda is configured. 
+
+```python
+# 1. Execute imports
+import json
+import boto3
+import uuid
+
+# 2. Make client connection
+client = boto3.client('dynamodb')
+
+def lambda_handler(event, context):
+# 3. Store the user input - get event details.
+    print(f"The user input from the Agent is {event}")
+    input_event = event
+ 
+# 4. Retrieve the data from the event - guestName, checkInDate, numberOfNights, & roomType
+    input_data = event['requestBody']['content']['application/json']['properties']
+    print(type(input_data))
+    print(input_data)
+
+    for item in input_data:
+        if item['name'] == 'guestName': 
+            guestName = item['value']
+        elif item['name'] == 'checkInDate':
+            checkInDate = item['value']
+        elif item['name'] == 'numberOfNights':
+            numberOfNights = item['value']
+        elif item['name'] == 'roomType':
+            roomType = item['value']
+    print(guestName)
+
+    # guestName = input_event['guestName']
+    # checkInDate = input_event['checkInDate']
+    # numberOfNights = input_event['numberOfNights']
+    # roomType = input_event['roomType']
+    # print(f"The guest name is {guestName}")
+
+# 5. Get room availabilty from hotelRoomAvailability Table using get_item method
+    response = client.get_item(TableName='hotelRoomAvailabilityTable', Key={'date': {'S': checkInDate}})
+    # print(response)
+    room_inventory_data = response['Item']
+    print(room_inventory_data)
+
+# 6. Get room inventory data for SeaView rooms and GardenView rooms and print values
+    current_gardenview_rooms = int(room_inventory_data['gardenView']['S'])
+    current_seaview_rooms = int(room_inventory_data['seaView']['S'])
+    print(f"The gardenview inventory is : {current_gardenview_rooms}")
+    print(f"The seaview inventory is : {current_seaview_rooms}")
+
+# 7. If inventory for Gardenview and Seaview = 0; send error message to the user -- No rooms available for specified date.
+    if current_gardenview_rooms == 0 and current_seaview_rooms == 0:
+        print("No rooms available for specified date")
+        return {
+            'statusCode': 404,
+            'body': json.dumps('No rooms available for specified date')
+        }
+        print(response)
+        return response
+    else:
+
+# 8. Generate unique booking ID to store in DDB table along with booking and send back booking id to user
+        booking_id = str(uuid.uuid4())
+        print(f"The booking id is {booking_id}")
+
+# 9. Create booking record by inserting this data into hotelRoomBookingTable using boto3 put_items method
+    response_booking = client.put_item(
+        TableName='hotelRoomBookingTable', 
+        Item={
+            'bookingID': {'S': booking_id}, 
+            'guestName': {'S': guestName}, 
+            'checkInDate': {'S': checkInDate}, 
+            'numberOfNights': {'S': numberOfNights}, 
+            'roomType': {'S': roomType}
+        }
+    )
+
+# 10. Print return bookingID
+    print(f"The response from Lambda is {booking_id}")
+
+# 11. Add details the Bedrock Agent expects 
+    agent = event['agent']
+    actionGroup = event['actionGroup']
+    api_path = event['apiPath']
+
+    # post parameters
+    post_parameters = event['requestBody']['content']['application/json']['properties']
+
+    response_body = {
+        'application/json': {
+            'body': json.dumps(booking_id)
+        }
+    }
+    
+    action_response = {
+        'actionGroup': event['actionGroup'],
+        'apiPath': event['apiPath'],
+        'httpMethod': event['httpMethod'],
+        'httpStatusCode': 200,
+        'responseBody': response_body
+    }
+    
+    session_attributes = event['sessionAttributes']
+    prompt_session_attributes = event['promptSessionAttributes']
+    
+    api_response = {
+        'messageVersion': '1.0', 
+        'response': action_response,
+        'sessionAttributes': session_attributes,
+        'promptSessionAttributes': prompt_session_attributes
+    }
+        
+# 13. Replace value of responseBody and print, return api_response
+    return api_response
+```
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/83d4169e-59ed-47ef-8804-92249f0a410c" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/32241fde-2caf-4eba-a57a-61c8c5c8f9f3" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/658e0243-fe6c-48b1-b5ef-64be758f3049" />
+</p>
