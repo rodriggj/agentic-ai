@@ -8,11 +8,17 @@
 
 - [ ] [1. Create an Agent](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#agent-creation)
 - [ ] [2. Create Tool #1 - RAG Knowledge Base](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#bedrock-knowledge-base-creation---tool-1)
+    + - [ ] [S3 Bucket Creation](http://www.google.com)
+    + - [ ] [Knowledge Base Creation](http://www.google.com)
 - [ ] [3. Create Tool #2 - Room Availability Check](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-2)
-    + - [ ] [test](http://www.google.com)
-    + - [ ] [test](http://www.google.com)
-    + - [ ] [test](http://www.google.com)
-- [ ] [4. Create Tool #3 - Room Booking Capabiliy](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-3)
+    + - [ ] [DynamoDB Configuration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#dynamodb-table)
+    + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
+    + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
+- [ ] [4. Create Tool #3 - Room Booking Capabiliy](https://github.com/rodriggj/agentic-ai/tree/main/
+hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-3)
+    + - [ ] [DynamoDB Configuration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#dynamodb-table)
+    + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
+    + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
 
 ------------
 
