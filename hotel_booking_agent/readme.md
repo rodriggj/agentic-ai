@@ -19,7 +19,8 @@
     + - [ ] [DynamoDB Configuration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#dynamodb-table)
     + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
     + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
-- [ ] [5. Guardrails](http://www.google.com)
+- [ ] [5. Guardrails](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#deployment)
+- [ ] [6. Deployment]()
 
 ------------
 
@@ -842,3 +843,25 @@ Paste the name, or select from the Drop down box the name of the Guardrail creat
 -----------
 
 ### Deployment
+
+1. Now that we've achieved the architectural goals of this agent build we can manage the publication of a baseline version of this agent. To do so nav to 'Agents', select the 'Hotel Booking Agent'. If you notice the right status of the current agent is 'TestAlias: Working draft'. We will publish this draft to our initial baseline version. To do so select 'Create Alias'. 
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/6bea94be-eaf5-4576-9c05-1a0b5af78d8f" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/0903a950-9111-4f57-b8fe-fca088241a6f" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/f4eb278e-a53b-4ea0-a3c8-e3760bca0f12" />
+</p>
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/f666ce2a-fba6-405f-949f-f6978cb5455a" />
+</p>
+
+> You can see that the baseline Version has been published and an Alias for this version of the Agent has been created. 
+
+------------
