@@ -19,7 +19,7 @@
     + - [ ] [DynamoDB Configuration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#dynamodb-table)
     + - [ ] [Lambda Function](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#lambda-function)
     + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
-- [ ] [5. Guardrails](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#deployment)
+- [ ] [5. Guardrails](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#guardrails)
 - [ ] [6. Deployment](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#deployment)
 - [ ] [7. UI Integration]()
 
@@ -866,3 +866,35 @@ Paste the name, or select from the Drop down box the name of the Guardrail creat
 > You can see that the baseline Version has been published and an Alias for this version of the Agent has been created. 
 
 ------------
+
+### User Interface (UI) for Agent
+
+1. Open a terminal and run the following command in the './hotel_booking_agent/UI' dir. 
+```python
+pip install -r requirements.txt
+```
+
+2. cd to 'UI_Local/amazon-bedrock-agent-test-ui-main' and update the following files with your 'AgentId' and 'AliasId'. 
+- [ ] ./services/bedrock_agent_runtime.py
+- [ ] .env.template
+- [ ] app.py
+
+3. Check to ensure your AWS CLI is configured 
+```sh
+aws configure
+```
+> Input your Secret Access Key and Secret
+
+4. Execute the following command to ensure all the required dependencies are installed: 
+```
+pip install -r requirements.txt
+```
+> Ensure you are in the dir that has this file. 
+5. Run the following command to invoke the `app.py` script and view the UI on your 'local:host'. 
+```sh 
+streamlit run app.py
+```
+6. Interact with the UI and the backend Bedrock Agent
+<p align="center>
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/f151c712-59c2-48dd-84b3-fcd2ba4d256f" />
+</p>
