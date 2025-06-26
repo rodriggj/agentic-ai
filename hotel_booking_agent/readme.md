@@ -6,10 +6,10 @@
 
 ## Procedures 
 
-[1. Create an Agent](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#agent-creation)
-[2. Create Tool #1 - RAG Knowledge Base](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#bedrock-knowledge-base-creation---tool-1)
-[3. Create Tool #2 - Room Availability Check](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-2)
-[4. Create Tool #3 - Room Booking Capabiliy](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-3)
+- [ ] [1. Create an Agent](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#agent-creation)
+- [ ] [2. Create Tool #1 - RAG Knowledge Base](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#bedrock-knowledge-base-creation---tool-1)
+- [ ] [3. Create Tool #2 - Room Availability Check](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-2)
+- [ ] [4. Create Tool #3 - Room Booking Capabiliy](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#aws-lambda-and-openapi-specification-w-dynamodb---tool-3)
 
 ------------
 
