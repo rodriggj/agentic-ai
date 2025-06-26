@@ -21,7 +21,7 @@
     + - [ ] [OpenAPI Schema Creation](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#openapi-schema)
 - [ ] [5. Guardrails](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#guardrails)
 - [ ] [6. Deployment](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#deployment)
-- [ ] [7. UI Integration]()
+- [ ] [7. UI Integration](https://github.com/rodriggj/agentic-ai/tree/main/hotel_booking_agent#user-interface-ui-for-agent)
 
 ------------
 
