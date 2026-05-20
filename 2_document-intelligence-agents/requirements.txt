@@ -1,0 +1,9 @@
+pdf2image
+pytesseract
+dataclasses
+pytest>=7.0.0
+python-dotenv==1.2.2
+pdf2image 
+Pillow
+poppler-utils
+rapidfuzz
